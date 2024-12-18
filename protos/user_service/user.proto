@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package service.v1;
+
+import "common/common.proto";
+
+
+message User {
+    string user_id = 1;
+    string username = 2;
+    string email = 3;
+    int64 created_at = 4;
+}
+
+message CreateUserRequest {
+    string username = 1;
+    string email = 2;
+    string password = 3;
+}
+
+message GetUserRequest {
+    string user_id = 1;
+}
+
+service UserService {
+    rpc CreateUser (CreateUserRequest) returns (common.v1.BaseResponse);
+    rpc GetUser (GetUserRequest) returns (User);
+} 
