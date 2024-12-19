@@ -56,9 +56,6 @@ class ProtoGenerator:
 
         # 遍历每个服务相关的proto文件并生成代码
         for proto_file in self.service_packages:
-            print(self.target_dir)  # 打印目标目录
-            print(self.source_dir)  # 打印源目录
-            print(proto_file)  # 打印当前处理的proto文件
 
             # 构建protoc命令并执行
             cmd = [

@@ -78,6 +78,7 @@ dependencies = [
     { name = "grpcio-tools" },
     { name = "mypy" },
     { name = "mypy-protobuf" },
+    { name = "protobuf" },
 ]
 
 [package.dev-dependencies]
@@ -94,6 +95,7 @@ requires-dist = [
     { name = "grpcio-tools", specifier = ">=1.68.1" },
     { name = "mypy", specifier = ">=1.13.0" },
     { name = "mypy-protobuf", specifier = ">=3.6.0" },
+    { name = "protobuf", specifier = ">=5.29.1" },
 ]
 
 [package.metadata.requires-dev]
