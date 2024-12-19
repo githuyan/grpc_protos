@@ -30,10 +30,15 @@ jobs:
     - name: Generate Proto code  # 生成 Proto 代码
       run: python -m scripts.gen_proto  # 使用模块方式执行
 
+    - name: Format code  # 格式化代码
+      run: |
+        black .  # 格式化代码
+        isort .   # 排序导入
+
     - name: Format check  # 检查代码格式
       run: |
         black --check .  # 检查代码格式是否符合 black 标准
-        isort --check .  # 检查导入语句的排序是否符合 isort 标准
+        isort --check .   # 检查导入语句的排序是否符合 isort 标准
 
     - name: Lint  # 运行代码检查
       run: |
@@ -60,7 +65,7 @@ jobs:
       run: pip install -r requirements.txt  # 安装基础依赖
 
     - name: Generate Proto code  # 生成 Proto 代码
-      run: python -m scripts.gen_proto
+      run: python -m scripts.gen_proto  # 使用模块方式执行
 
     - name: Build package  # 构建项目包
       run: python -m build  # 使用 Python 的 build 模块构建包
