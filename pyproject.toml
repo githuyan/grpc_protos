@@ -1,5 +1,5 @@
 [project]
-name = "grpc-service"
+name = "grpc-protos"
 version = "0.1.0"
 description = "gRPC service with Protocol Buffers"
 requires-python = ">=3.9"
