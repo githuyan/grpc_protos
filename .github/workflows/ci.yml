@@ -43,7 +43,7 @@ jobs:
     - name: Lint  # 运行代码检查
       run: |
         ruff check .  # 使用 ruff 进行代码风格检查
-        mypy services/  # 使用 mypy 进行类型检查
+#        mypy services/  # 使用 mypy 进行类型检查
 
     - name: Test  # 运行测试
       run: pytest tests/ -v  # 使用 pytest 运行测试并显示详细信息

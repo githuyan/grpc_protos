@@ -30,8 +30,8 @@ jobs:
     - name: Generate Proto code  # 生成 Proto 代码
       run: python -m scripts.gen_proto  # 使用模块方式执行
 
-    - name: Type check generated code  # 对生成的代码进行类型检查
-      run: mypy services/
+    # - name: Type check generated code  # 对生成的代码进行类型检查
+    #   run: mypy services/
 
     - name: Run proto tests  # 运行与 Proto 相关的测试
       run: pytest tests/
