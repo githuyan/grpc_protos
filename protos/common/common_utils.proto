@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package common.v1;
+
+// 通用工具消息
+message CommonUtils {
+    string id = 1; // 唯一标识符
+    string name = 2; // 名称
+}

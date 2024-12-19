@@ -30,6 +30,8 @@ ENV/
 .vscode/
 *.swp
 *.swo
+.mypy_cache/
+.ruff_cache/
 
 # Generated files
 services/**/*_pb2.py

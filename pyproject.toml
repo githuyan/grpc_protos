@@ -16,6 +16,7 @@ warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = true
 check_untyped_defs = true
+mypy_path = "services"
 
 [[tool.mypy.overrides]]
 module = ["grpc.*"]
@@ -35,3 +36,11 @@ line_length = 88
 line-length = 88
 target-version = "py39"
 select = ["E", "F", "B", "I"]
+
+[dependency-groups]
+dev = [
+    "black>=24.10.0",
+    "isort>=5.13.2",
+    "pytest>=8.3.4",
+    "ruff>=0.8.3",
+]
