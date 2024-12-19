@@ -17,21 +17,15 @@ readme = "README.md"
 license = {text = "MIT"}
 
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
 
-[tool.hatch.build]
-include = [
-    "services/**/*.py",
-    "protos/**/*.proto",
-]
+[tool.setuptools]
+packages = ["services", "protos"]
 
 [project.urls]
 Homepage = "https://github.com/githuyan/grpc_protos"
 Repository = "https://github.com/githuyan/grpc_protos.git"
-
-[tool.hatch.build.targets.wheel]
-packages = ["services", "protos"]
 
 [dependency-groups]
 dev = [
