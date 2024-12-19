@@ -3,40 +3,40 @@ name: Proto CI
 on:
   push:
     paths:
-      - 'protos/**'
-      - 'scripts/gen_proto.py'
-      - '.github/workflows/proto-ci.yml'
+      - 'protos/**'  # 监视 protos 目录下的所有文件变更
+      - 'scripts/gen_proto.py'  # 监视生成 Proto 代码的脚本变更
+      - '.github/workflows/proto-ci.yml'  # 监视当前工作流文件的变更
   pull_request:
     paths:
-      - 'protos/**'
-      - 'scripts/gen_proto.py'
+      - 'protos/**'  # 监视 PR 中对 protos 目录的变更
+      - 'scripts/gen_proto.py'  # 监视 PR 中对生成 Proto 代码的脚本的变更
 
 jobs:
   proto-check:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # 使用最新的 Ubuntu 环境
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v4  # 检出代码库
 
-    - name: Set up Python
+    - name: Set up Python  # 设置 Python 环境
       uses: actions/setup-python@v4
       with:
-        python-version: "3.11"
+        python-version: "3.11"  # 使用 Python 3.11
 
-    - name: Install uv
+    - name: Install uv  # 安装 uv 工具
       run: |
         curl -LsSf https://astral.sh/uv/install.sh | sh
-        echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+        echo "$HOME/.cargo/bin" >> $GITHUB_PATH  # 将 uv 的路径添加到环境变量中
 
-    - name: Install dependencies
+    - name: Install dependencies  # 安装项目依赖
       run: |
-        uv pip install --system -r requirements.txt
-        uv pip install --system -r requirements-dev.txt
+        uv pip install --system -r requirements.txt  # 安装基础依赖
+        if [ -f requirements-dev.txt ]; then uv pip install --system -r requirements-dev.txt; fi  # 如果存在，安装开发依赖
 
-    - name: Generate Proto code
-      run: python scripts/gen_proto.py
+    - name: Generate Proto code  # 生成 Proto 代码
+      run: python -m scripts.gen_proto  # 使用模块方式执行
 
-    - name: Type check generated code
+    - name: Type check generated code  # 对生成的代码进行类型检查
       run: mypy services/
 
-    - name: Run proto tests
+    - name: Run proto tests  # 运行与 Proto 相关的测试
       run: pytest tests/

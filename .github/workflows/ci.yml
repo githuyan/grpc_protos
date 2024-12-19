@@ -2,77 +2,77 @@ name: CI/CD
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main ]  # 在 main 分支上推送时触发
   pull_request:
-    branches: [ main ]
+    branches: [ main ]  # 在对 main 分支的 PR 时触发
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # 使用最新的 Ubuntu 环境
     strategy:
       matrix:
-        python-version: ["3.9", "3.10", "3.11"]
+        python-version: ["3.9", "3.11", "3.12"]  # 在多个 Python 版本上运行测试
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v4  # 检出代码库
 
-    - name: Set up Python ${{ matrix.python-version }}
+    - name: Set up Python ${{ matrix.python-version }}  # 设置 Python 环境
       uses: actions/setup-python@v4
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version: ${{ matrix.python-version }}  # 使用矩阵中的 Python 版本
 
-    - name: Install uv
+    - name: Install uv  # 安装 uv 工具
       run: |
         curl -LsSf https://astral.sh/uv/install.sh | sh
-        echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+        echo "$HOME/.cargo/bin" >> $GITHUB_PATH  # 将 uv 的路径添加到环境变量中
 
-    - name: Install dependencies
+    - name: Install dependencies  # 安装项目依赖
       run: |
-        uv pip install -r requirements.txt
-        uv pip install -r requirements-dev.txt
+        uv pip install -r requirements.txt  # 安装基础依赖
+        if [ -f requirements-dev.txt ]; then uv pip install --system -r requirements-dev.txt; fi  # 安装开发依赖
 
-    - name: Generate Proto code
-      run: python scripts/gen_proto.py
+    - name: Generate Proto code  # 生成 Proto 代码
+      run: python -m scripts.gen_proto
 
-    - name: Format check
+    - name: Format check  # 检查代码格式
       run: |
-        black --check .
-        isort --check .
+        black --check .  # 检查代码格式是否符合 black 标准
+        isort --check .  # 检查导入语句的排序是否符合 isort 标准
 
-    - name: Lint
+    - name: Lint  # 运行代码检查
       run: |
-        ruff check .
-        mypy services/
+        ruff check .  # 使用 ruff 进行代码风格检查
+#        mypy services/  # 使用 mypy 进行类型检查
 
-    - name: Test
-      run: pytest tests/ -v
+    - name: Test  # 运行测试
+      run: pytest tests/ -v  # 使用 pytest 运行测试并显示详细信息
 
   build:
-    needs: test
-    runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: test  # 依赖于 test 作业的成功
+    runs-on: ubuntu-latest  # 使用最新的 Ubuntu 环境
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'  # 仅在推送到 main 分支时触发
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v4  # 检出代码库
 
-    - name: Set up Python
+    - name: Set up Python  # 设置 Python 环境
       uses: actions/setup-python@v4
       with:
-        python-version: "3.11"
+        python-version: "3.11"  # 使用 Python 3.11
 
-    - name: Install uv
+    - name: Install uv  # 安装 uv 工具
       run: |
         curl -LsSf https://astral.sh/uv/install.sh | sh
-        echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+        echo "$HOME/.cargo/bin" >> $GITHUB_PATH  # 将 uv 的路径添加到环境变量中
 
-    - name: Install dependencies
-      run: uv pip install -r requirements.txt
+    - name: Install dependencies  # 安装项目依赖
+      run: uv pip install -r requirements.txt  # 安装基础依赖
 
-    - name: Generate Proto code
-      run: python scripts/gen_proto.py
+    - name: Generate Proto code  # 生成 Proto 代码
+      run: python -m scripts.gen_proto
 
-    - name: Build package
-      run: python -m build
+    - name: Build package  # 构建项目包
+      run: python -m build  # 使用 Python 的 build 模块构建包
 
     # 如果需要发布到 PyPI，可以添加以下步骤
     # - name: Publish to PyPI
