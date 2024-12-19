@@ -11,13 +11,6 @@ dependencies = [
     "protobuf>=5.29.1",
 ]
 
-[tool.setuptools]
-packages = ["services"]
-
-[project.urls]
-Homepage = "https://github.com/githuyan/grpc_protos"
-Repository = "https://github.com/githuyan/grpc_protos.git"
-
 [dependency-groups]
 dev = [
     "black>=24.10.0",
@@ -25,3 +18,13 @@ dev = [
     "pytest>=8.3.4",
     "ruff>=0.8.3",
 ]
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = {"" = "grpc_protos"}
+
+[tool.setuptools.packages.find]
+where = ["grpc_protos"]

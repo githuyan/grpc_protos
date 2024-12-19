@@ -18,12 +18,17 @@ class ProtoGenerator:
     """
 
     def __init__(self, source_dir: str = "protos", target_dir: str = "services"):
-        self.source_dir = Path(source_dir)
-        self.target_dir = Path(target_dir)
+        self.source_dir = Path(__file__).parent.parent / Path(
+            f"grpc_protos/{source_dir}"
+        )
+        self.target_dir = Path(__file__).parent.parent / Path(
+            f"grpc_protos/{target_dir}"
+        )
 
-        # 遍历source_dir下的所有proto文件，区分common和service文件
+        # 遍历source_dir下的所有proto文件，区分common和service文件·
         self.common_protos = []
         self.service_packages = []
+
         for proto_file in self.source_dir.rglob("*.proto"):
             if proto_file.is_file():
                 # 将common目录下的proto文件归类为公共文件
