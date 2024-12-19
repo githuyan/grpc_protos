@@ -1,6 +1,3 @@
-import os
-from pathlib import Path
-
 import pytest
 
 from scripts.gen_proto import ProtoGenerator
@@ -60,8 +57,7 @@ def test_generated_code_imports():
     try:
         import sys
         sys.path.append('services')  # 确保路径正确
-        from services.user_service.user_pb2 import User, CreateUserRequest
-        from services.user_service.user_pb2_grpc import UserServiceStub
+        from services.user_service.user_pb2 import User
         
         # 创建测试对象以验证基本功能
         user = User(
