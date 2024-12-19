@@ -10,18 +10,9 @@ dependencies = [
     "mypy>=1.13.0",
     "protobuf>=5.29.1",
 ]
-authors = [
-    {name = "githuyan"}
-]
-readme = "README.md"
-license = {text = "MIT"}
-
-[build-system]
-requires = ["setuptools>=61.0"]
-build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
-packages = ["services", "protos"]
+packages = ["services"]
 
 [project.urls]
 Homepage = "https://github.com/githuyan/grpc_protos"
