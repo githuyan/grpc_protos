@@ -1,17 +1,17 @@
-# gRPC 服务开发工具集
+# gRPC Protos
 
-这是一个用于 gRPC 服务开发的工具集，提供了 Proto 文件编译、代码格式化、测试等功能。
+gRPC service with Protocol Buffers
 
 ## 安装
 
-1. 安装基础依赖：
 ```bash
-python -m scripts.dev install
+pip install git+https://github.com/githuyan/grpc_protos.git
 ```
 
-2. 安装开发依赖（如果需要进行开发）：
-```bash
-python -m scripts.dev install-dev
+## 使用方法
+
+```python
+from services import YourClass  # 替换成实际的导出内容
 ```
 
 ## 目录结构
