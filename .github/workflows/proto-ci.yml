@@ -10,6 +10,7 @@ on:
     paths:
       - 'protos/**'  # 监视 PR 中对 protos 目录的变更
       - 'scripts/gen_proto.py'  # 监视 PR 中对生成 Proto 代码的脚本的变更
+  workflow_dispatch:  # 允许手动触发工作流
 
 jobs:
   proto-check:
@@ -29,6 +30,11 @@ jobs:
 
     - name: Generate Proto code  # 生成 Proto 代码
       run: python -m scripts.gen_proto  # 使用模块方式执行
+
+    - name: Format code  # 格式化代码
+      run: |
+        black .  # 格式化代码
+        isort .   # 排序导入
 
     # - name: Type check generated code  # 对生成的代码进行类型检查
     #   run: mypy services/
