@@ -6,12 +6,12 @@
 
 1. 安装基础依赖：
 ```bash
-python scripts/dev.py install
+python -m scripts.dev install
 ```
 
 2. 安装开发依赖（如果需要进行开发）：
 ```bash
-python scripts/dev.py install-dev
+python -m scripts.dev install-dev
 ```
 
 ## 目录结构
@@ -35,7 +35,7 @@ python scripts/dev.py install-dev
 使用以下命令生成 Proto 对应的 Python 代码：
 
 ```bash
-python scripts/gen_proto.py [--source-dir PROTO目录] [--target-dir 输出目录]
+python -m scripts.gen_proto [--source-dir PROTO目录] [--target-dir 输出目录]
 ```
 
 参数说明：
@@ -45,7 +45,7 @@ python scripts/gen_proto.py [--source-dir PROTO目录] [--target-dir 输出目�
 ### 代码格式化
 
 ```bash
-python scripts/dev.py format
+python -m scripts.dev format
 ```
 
 这个命令会：
@@ -55,7 +55,7 @@ python scripts/dev.py format
 ### 代码检查
 
 ```bash
-python scripts/dev.py lint
+python -m scripts.dev lint
 ```
 
 这个命令会：
@@ -65,13 +65,13 @@ python scripts/dev.py lint
 ### 运行测试
 
 ```bash
-python scripts/dev.py test
+python -m scripts.dev test
 ```
 
 ### 清理生成的文件
 
 ```bash
-python scripts/dev.py clean
+python -m scripts.dev clean
 ```
 
 这个命令会清理：
