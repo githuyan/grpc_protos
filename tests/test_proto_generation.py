@@ -55,8 +55,6 @@ def test_generate_proto_files(proto_generator, tmp_path):
 def test_generated_code_imports():
     """测试生成的代码是否可以正确导入"""
     try:
-        import sys
-        sys.path.append('services')  # 确保路径正确
         from services.user_service.user_pb2 import User
         
         # 创建测试对象以验证基本功能
