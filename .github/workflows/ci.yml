@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest  # 使用最新的 Ubuntu 环境
     strategy:
       matrix:
-        python-version: ["3.9", "3.11", "3.12"]  # 在多个 Python 版本上运行测试
+        python-version: ["3.9", "3.10", "3.11"]  # 在多个 Python 版本上运行测试
 
     steps:
     - uses: actions/checkout@v4  # 检出代码库
@@ -21,18 +21,13 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}  # 使用矩阵中的 Python 版本
 
-    - name: Install uv  # 安装 uv 工具
-      run: |
-        curl -LsSf https://astral.sh/uv/install.sh | sh
-        echo "$HOME/.cargo/bin" >> $GITHUB_PATH  # 将 uv 的路径添加到环境变量中
-
     - name: Install dependencies  # 安装项目依赖
       run: |
-        uv pip install -r requirements.txt  # 安装基础依赖
-        if [ -f requirements-dev.txt ]; then uv pip install --system -r requirements-dev.txt; fi  # 安装开发依赖
+        pip install -r requirements.txt  # 安装基础依赖
+        if [ -f requirements-dev.txt ]; then pip install -r requirements-dev.txt; fi  # 如果存在，安装开发依赖
 
     - name: Generate Proto code  # 生成 Proto 代码
-      run: python -m scripts.gen_proto
+      run: python -m scripts.gen_proto  # 使用模块方式执行
 
     - name: Format check  # 检查代码格式
       run: |
@@ -42,7 +37,7 @@ jobs:
     - name: Lint  # 运行代码检查
       run: |
         ruff check .  # 使用 ruff 进行代码风格检查
-#        mypy services/  # 使用 mypy 进行类型检查
+        mypy services/  # 使用 mypy 进行类型检查
 
     - name: Test  # 运行测试
       run: pytest tests/ -v  # 使用 pytest 运行测试并显示详细信息
@@ -60,13 +55,8 @@ jobs:
       with:
         python-version: "3.11"  # 使用 Python 3.11
 
-    - name: Install uv  # 安装 uv 工具
-      run: |
-        curl -LsSf https://astral.sh/uv/install.sh | sh
-        echo "$HOME/.cargo/bin" >> $GITHUB_PATH  # 将 uv 的路径添加到环境变量中
-
     - name: Install dependencies  # 安装项目依赖
-      run: uv pip install -r requirements.txt  # 安装基础依赖
+      run: pip install -r requirements.txt  # 安装基础依赖
 
     - name: Generate Proto code  # 生成 Proto 代码
       run: python -m scripts.gen_proto
