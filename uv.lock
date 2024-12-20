@@ -70,9 +70,9 @@ wheels = [
 ]
 
 [[package]]
-name = "grpc-service"
+name = "grpc-protos"
 version = "0.1.0"
-source = { virtual = "." }
+source = { editable = "." }
 dependencies = [
     { name = "grpcio" },
     { name = "grpcio-tools" },
@@ -84,6 +84,7 @@ dependencies = [
 [package.dev-dependencies]
 dev = [
     { name = "black" },
+    { name = "hatchling" },
     { name = "isort" },
     { name = "pytest" },
     { name = "ruff" },
@@ -101,6 +102,7 @@ requires-dist = [
 [package.metadata.requires-dev]
 dev = [
     { name = "black", specifier = ">=24.10.0" },
+    { name = "hatchling", specifier = ">=1.27.0" },
     { name = "isort", specifier = ">=5.13.2" },
     { name = "pytest", specifier = ">=8.3.4" },
     { name = "ruff", specifier = ">=0.8.3" },
@@ -215,6 +217,22 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/91/ab/ec873050f4e3e14b1331cdba1e3e39eeb13d5da08ec41430b3b082882c14/grpcio_tools-1.68.1-cp39-cp39-musllinux_1_1_x86_64.whl", hash = "sha256:d3c08d1a244b5025ba3f8ef81d0885b431b93cc20bc4560add4cdfcf38c1bfad", size = 2903802 },
     { url = "https://files.pythonhosted.org/packages/26/db/d32322d2eb168e5b761935dd1869c518f8ab55a20a16ff0bc5ac0fd2567d/grpcio_tools-1.68.1-cp39-cp39-win32.whl", hash = "sha256:049f05a3f227e9f696059a20b2858e6d7c1cd6037d8471306d7ab7627b1a4ce4", size = 946364 },
     { url = "https://files.pythonhosted.org/packages/b0/36/4620195207c6905145ce67984672069f9e9a50da1531f3e53abc0206e4e6/grpcio_tools-1.68.1-cp39-cp39-win_amd64.whl", hash = "sha256:4c3599c75b1157e6bda24cdbdadb023bf0fe1085aa1e0047a1f35a8778f9b56e", size = 1097635 },
+]
+
+[[package]]
+name = "hatchling"
+version = "1.27.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "packaging" },
+    { name = "pathspec" },
+    { name = "pluggy" },
+    { name = "tomli", marker = "python_full_version < '3.11'" },
+    { name = "trove-classifiers" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/8f/8a/cc1debe3514da292094f1c3a700e4ca25442489731ef7c0814358816bb03/hatchling-1.27.0.tar.gz", hash = "sha256:971c296d9819abb3811112fc52c7a9751c8d381898f36533bb16f9791e941fd6", size = 54983 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/08/e7/ae38d7a6dfba0533684e0b2136817d667588ae3ec984c1a4e5df5eb88482/hatchling-1.27.0-py3-none-any.whl", hash = "sha256:d3a2f3567c4f926ea39849cdf924c7e99e6686c9c8e288ae1037c8fa2a5d937b", size = 75794 },
 ]
 
 [[package]]
@@ -436,6 +454,15 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/5b/b9/1ed31d167be802da0fc95020d04cd27b7d7065cc6fbefdd2f9186f60d7bd/tomli-2.2.1-cp313-cp313-win32.whl", hash = "sha256:d3f5614314d758649ab2ab3a62d4f2004c825922f9e370b29416484086b264ec", size = 98724 },
     { url = "https://files.pythonhosted.org/packages/c7/32/b0963458706accd9afcfeb867c0f9175a741bf7b19cd424230714d722198/tomli-2.2.1-cp313-cp313-win_amd64.whl", hash = "sha256:a38aa0308e754b0e3c67e344754dff64999ff9b513e691d0e786265c93583c69", size = 109383 },
     { url = "https://files.pythonhosted.org/packages/6e/c2/61d3e0f47e2b74ef40a68b9e6ad5984f6241a942f7cd3bbfbdbd03861ea9/tomli-2.2.1-py3-none-any.whl", hash = "sha256:cb55c73c5f4408779d0cf3eef9f762b9c9f147a77de7b258bef0a5628adc85cc", size = 14257 },
+]
+
+[[package]]
+name = "trove-classifiers"
+version = "2024.10.21.16"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/99/85/92c2667cf221b37648041ce9319427f92fa76cbec634aad844e67e284706/trove_classifiers-2024.10.21.16.tar.gz", hash = "sha256:17cbd055d67d5e9d9de63293a8732943fabc21574e4c7b74edf112b4928cf5f3", size = 16153 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/35/35/5055ab8d215af853d07bbff1a74edf48f91ed308f037380a5ca52dd73348/trove_classifiers-2024.10.21.16-py3-none-any.whl", hash = "sha256:0fb11f1e995a757807a8ef1c03829fbd4998d817319abcef1f33165750f103be", size = 13546 },
 ]
 
 [[package]]

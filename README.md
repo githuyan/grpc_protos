@@ -11,7 +11,7 @@ pip install git+https://github.com/githuyan/grpc_protos.git
 ## 使用方法
 
 ```python
-from grpc_protos.services import YourService
+from grpc_protos.services import *
 ```
 
 ## 目录结构

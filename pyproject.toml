@@ -14,17 +14,12 @@ dependencies = [
 [dependency-groups]
 dev = [
     "black>=24.10.0",
+    "hatchling>=1.27.0",
     "isort>=5.13.2",
     "pytest>=8.3.4",
     "ruff>=0.8.3",
 ]
 
 [build-system]
-requires = ["setuptools", "wheel"]
-build-backend = "setuptools.build_meta"
-
-[tool.setuptools]
-package-dir = {"" = "grpc_protos"}
-
-[tool.setuptools.packages.find]
-where = ["grpc_protos"]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
