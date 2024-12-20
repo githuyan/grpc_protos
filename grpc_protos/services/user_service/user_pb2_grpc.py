@@ -2,6 +2,9 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import warnings
 
+import sys
+print(sys.path)
+
 import grpc
 from common import common_pb2 as common_dot_common__pb2
 from user_service import user_pb2 as user__service_dot_user__pb2
@@ -27,6 +30,11 @@ if _version_not_supported:
         + f" Please upgrade your grpc module to grpcio>={GRPC_GENERATED_VERSION}"
         + f" or downgrade your generated code using grpcio-tools<={GRPC_VERSION}."
     )
+
+
+class AAA():
+    def ppp(self):
+        print("ppp")
 
 
 class UserServiceStub(object):
