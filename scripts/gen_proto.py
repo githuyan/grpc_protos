@@ -45,7 +45,12 @@ class ProtoGenerator:
         if self.target_dir.exists():
             shutil.rmtree(self.target_dir)
         self.target_dir.mkdir(parents=True, exist_ok=True)
-        (self.target_dir / "__init__.py").touch()
+
+        # 由于 protoc 生成的代码中，引用的路径是相对路径，所以需要将.services/添加到 sys.path 中
+        with open(self.target_dir / "__init__.py", "w") as f:
+            f.write("import sys\n")
+            f.write("import os\n")
+            f.write("sys.path.append(os.path.dirname(os.path.abspath(__file__)))\n")
 
     def generate(self) -> None:
         """生成proto代码
