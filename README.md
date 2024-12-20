@@ -4,26 +4,126 @@ gRPC service with Protocol Buffers
 
 ## 安装
 
+您可以通过以下命令安装本项目：
+
 ```bash
-pip install git+https://github.com/githuyan/grpc_protos.git
+pip install -e ../grpc_protos
 ```
 
 ## 使用方法
 
+在您的 Python 代码中，您可以通过以下方式导入服务模块：
+
 ```python
-from grpc_protos.services import *
+from grpc_protos.services.user_service import user_pb2_grpc
+```
+
+### 启动 gRPC 服务
+
+首先，您需要启动 gRPC 服务。以下是一个简单的示例，展示如何启动服务：
+
+```python
+import grpc
+from concurrent import futures
+from grpc_protos.services.user_service import user_pb2_grpc
+
+class UserService(user_pb2_grpc.UserServiceServicer):
+    def CreateUser(self, request, context):
+        return common_pb2.BaseResponse(code=0, message="User created successfully")
+
+    def GetUser(self, request, context):
+        return user_pb2.User(
+            user_id=request.user_id,
+            username="test_user",
+            email="test@example.com",
+            created_at=1234567890,
+        )
+
+def serve():
+    server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+    user_pb2_grpc.add_UserServiceServicer_to_server(UserService(), server)
+    server.add_insecure_port('[::]:50051')
+    server.start()
+    print("Server is running on port 50051...")
+    server.wait_for_termination()
+
+if __name__ == '__main__':
+    serve()
+```
+
+### 创建 gRPC 客户端
+
+接下来，您可以创建一个简单的客户端来测试与服务的通信：
+
+```python
+import grpc
+from grpc_protos.services.user_service import user_pb2_grpc, user_pb2
+
+def run():
+    channel = grpc.insecure_channel('localhost:50051')
+    stub = user_pb2_grpc.UserServiceStub(channel)
+
+    request = user_pb2.CreateUserRequest(
+        username="test_user",
+        email="test@example.com",
+        password="secure_password"
+    )
+
+    response = stub.CreateUser(request)
+    print(response.message)
+
+if __name__ == "__main__":
+    run()
+```
+
+### 测试 gRPC 服务
+
+项目中包含了测试用例，您可以使用 `pytest` 来运行测试，验证服务的基本通信功能是否正常：
+
+```bash
+pytest tests/test_grpc_connection.py
+```
+
+### 示例代码
+
+以下是一个使用 gRPC 服务的完整示例：
+
+```python
+import grpc
+from grpc_protos.services.user_service import user_pb2_grpc, user_pb2
+
+def create_user():
+    channel = grpc.insecure_channel('localhost:50051')
+    stub = user_pb2_grpc.UserServiceStub(channel)
+
+    request = user_pb2.CreateUserRequest(
+        username="test_user",
+        email="test@example.com",
+        password="secure_password"
+    )
+
+    response = stub.CreateUser(request)
+    print(response.message)
+
+if __name__ == "__main__":
+    create_user()
 ```
 
 ## 目录结构
 
 ```
 .
-├── protos/          # Proto 文件目录
-│   ├── common/      # 公共 Proto 文件
-│   └── services/    # 服务相关 Proto 文件
-├── services/        # 生成的 Python 代码
-├── tests/           # 测试文件
-└── scripts/         # 开发工具脚本
+├── grpc_protos/      # gRPC Protos 项目目录
+│   ├── __init__.py   # 初始化文件
+│   ├── protos/       # Proto 文件目录
+│   │   ├── common/   # 公共 Proto 文件
+│   │   └── services/ # 服务相关 Proto 文件
+│   └── services/     # 生成的 Python 代码
+├── scripts/          # 开发工具脚本
+│   ├── dev.py        # 开发脚本
+│   └── gen_proto.py  # Proto 生成脚本
+├── tests/            # 测试文件
+└── README.md         # 项目说明文档
 ```
 
 ## 开发工具使用

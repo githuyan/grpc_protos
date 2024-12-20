@@ -65,3 +65,23 @@ def test_get_user(grpc_channel):
     assert response.user_id == "12345"  # 确保返回的用户 ID 正确
     assert response.username == "test_user"  # 确保返回的用户名正确
     assert response.email == "test@example.com"  # 确保返回的邮箱正确
+
+
+def test_grpc_connection(grpc_channel):
+    """测试 gRPC 服务的基本通信功能"""
+    stub = user_pb2_grpc.UserServiceStub(grpc_channel)
+
+    # 测试创建用户
+    create_request = user_pb2.CreateUserRequest(
+        username="test_user", email="test@example.com", password="secure_password"
+    )
+    create_response = stub.CreateUser(create_request)
+    assert create_response.code == 0
+    assert create_response.message == "User created successfully"
+
+    # 测试获取用户
+    get_request = user_pb2.GetUserRequest(user_id="12345")
+    get_response = stub.GetUser(get_request)
+    assert get_response.user_id == "12345"
+    assert get_response.username == "test_user"
+    assert get_response.email == "test@example.com"

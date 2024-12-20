@@ -23,3 +23,10 @@ dev = [
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+# 最好时安装的时候自己执行生成脚本和格式化脚本，todo:或者先执行再将代码推上去
+[tool.uv]
+post-install = [
+    "python grpc_protos/scripts/gen_protos.py",  # 执行你的 Protos 生成脚本
+    "isort .",  # 执行 isort 来格式化代码
+]
